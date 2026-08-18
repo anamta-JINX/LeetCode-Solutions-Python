@@ -28,6 +28,7 @@
  
 
 # Follow-up: Can you come up with an algorithm that is less than O(n2) time complexity?
+
 nums = [2,7,11,15]
 target = 9
 
@@ -36,18 +37,18 @@ class Solution(object):
 
         seen = {}
 
-        for index in range(len(nums)):
+        for i in range(len(nums)):
 
-            current_number = nums[index]
+            current_num = nums[i]
 
-            number_needed = target - current_number
+            needed = target - current_num
 
-            if number_needed in seen:
-                return [seen[number_needed], index]
+            if needed in seen:
+                return [seen[needed], i]
 
-            seen[current_number] = index
-            
+            seen[current_num] = i
 
+#Calling the function and printing it 
 solution = Solution()
 print(solution.twoSum(nums, target))
             
