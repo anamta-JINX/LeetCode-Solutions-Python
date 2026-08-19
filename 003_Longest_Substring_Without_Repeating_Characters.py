@@ -36,21 +36,62 @@
 
 class Solution(object):
     def lengthOfLongestSubstring(self, s):
-        """
-        :type s: str
-        :rtype: int
-        """
-        seen = {}
+
+        # This set will store the characters
+        # currently inside our sliding window.
+        #
+        # A set is useful because it cannot contain duplicates.
+        char_set = set()
+
+        # 'left' represents the starting position
+        # of our sliding window.
         left = 0
-        longest = 0
 
+        # Stores the longest substring length
+        # we have found so far.
+        max_length = 0
+
+        # 'right' moves through the string
+        # one character at a time.
         for right in range(len(s)):
-            char = s[right]
 
-            if char in seen and seen[char] >= left:
-                left = seen[char] + 1
+            # If the current character is already inside
+            # our window, we have found a duplicate.
+            #
+            # Keep removing characters from the LEFT
+            # until the duplicate disappears.
+            while s[right] in char_set:
 
-            seen[char] = right
-            longest = max(longest, right - left + 1)
+                # Remove the character at the left
+                # side of the window.
+                char_set.remove(s[left])
 
-        return longest
+                # Move the left side of the window
+                # one position forward.
+                left += 1
+
+            # Now s[right] is not a duplicate,
+            # so add it to our current window.
+            char_set.add(s[right])
+
+            # Calculate the size of the current window.
+            #
+            # Example:
+            #
+            # left = 0
+            # right = 2
+            #
+            # indexes: 0, 1, 2
+            #
+            # therefore length = 3
+            #
+            # right - left + 1
+            current_length = right - left + 1
+
+            # Compare our current window length
+            # with the longest length found so far.
+            max_length = max(max_length, current_length)
+
+        # After checking the entire string,
+        # return the longest length.
+        return max_length
